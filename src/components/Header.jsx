@@ -91,7 +91,7 @@ const Header = () => {
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}>
-                  <Link style={{ textDecoration: "none", color: 'white' }} to={`/Home}`}>
+                  <Link style={{ textDecoration: "none", color: 'white' }} to='/Home'>
                     Home
                   </Link>
                 </Button>

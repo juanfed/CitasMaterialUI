@@ -29,6 +29,16 @@ const AgendarCita = () => {
 	const actualizar = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value })
 	}
+
+	const agregarCita = () =>{
+		
+		const datos = JSON.parse(localStorage.getItem('CITAS')) ? JSON.parse(localStorage.getItem('CITAS')) : []		// sirve para devolverme un string de lo guardado
+		localStorage.setItem('CITAS', JSON.stringify([...datos, data]))
+	}
+
+	const imprimir = () =>{
+		console.log(JSON.parse(localStorage.getItem('CITAS')))
+	}
 	return (
 		<main>
 			<section>
@@ -93,7 +103,7 @@ const AgendarCita = () => {
 										onChange={actualizar}
 									/>
 									<br /><br />
-									<Button variant="contained" color="success" type="submit" endIcon={<SendIcon />}>
+									<Button variant="contained" color="success" type="submit" onClick={agregarCita} endIcon={<SendIcon />}>
 										Agendar
 									</Button>
 								</FormGroup>
@@ -101,7 +111,10 @@ const AgendarCita = () => {
 						</Grid>
 					</Grid>
 				</Box>
-			</section>
+				</section>
+				<br /><br /><br /><br />
+				<button type='text' onClick={imprimir}>Imprimir</button>
+				<br /><br /><br /><br />
 		</main>
 	)
 }
