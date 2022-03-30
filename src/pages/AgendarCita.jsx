@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Grid, FormGroup, InputLabel, Input, Select, FormControl, TextareaAutosize } from '@mui/material';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
+import axios from 'axios';
 
 import SendIcon from '@mui/icons-material/Send';
 
@@ -15,7 +16,7 @@ const AgendarCita = () => {
 	const [data, setData] = useState({
 		name: '',
 		lastName: '',
-		id: '',
+		id: localStorage.getItem('ID'),  // para que siempre me agende la cita por el numero de id_usuario
 		phone: '',
 		email: '',
 		petName: '',
@@ -30,15 +31,32 @@ const AgendarCita = () => {
 		setData({ ...data, [e.target.name]: e.target.value })
 	}
 
-	const agregarCita = () =>{
-		
-		const datos = JSON.parse(localStorage.getItem('CITAS')) ? JSON.parse(localStorage.getItem('CITAS')) : []		// sirve para devolverme un string de lo guardado
-		localStorage.setItem('CITAS', JSON.stringify([...datos, data]))
+	const agregarCita = async () => {
+
+		const options = {
+			method: 'POST',
+			url: 'http://localhost:8080/agendar-cita',
+			headers: { 'Content-Type': 'application/json' },
+			data: {
+				id_doctor: data.doctor,
+				id_usuario: data.id,
+				nombre_mascota: data.petName,
+				id_tipo: data.typePet,
+				sintomas: data.symptom,
+				fecha: data.date,
+				hora: data.time
+			}
+		};
+
+		await axios.request(options).then(function (response) {
+			console.log(response.data);
+			alert("Cita agendada con exito"); // lo puse como un mensaje emergente :v
+		}).catch(function (error) {
+			console.error(error);
+			alert("Error al agendar la cita");
+		});
 	}
 
-	const imprimir = () =>{
-		console.log(JSON.parse(localStorage.getItem('CITAS')))
-	}
 	return (
 		<main>
 			<section>
@@ -56,15 +74,15 @@ const AgendarCita = () => {
 						<Grid item md={8}>
 							<form action="" onSubmit={sendDate}>
 								<FormGroup >
-									<InputLabel htmlFor='name'>Nombre: </InputLabel>
+									{/* <InputLabel htmlFor='name'>Nombre: </InputLabel>
 									<Input id='name' type='text' name='name' onChange={actualizar} placeholder='Ingrese su nombre' />
 									<br />
 									<InputLabel htmlFor='lastName'>Apellido: </InputLabel>
 									<Input id='lastName' type='text' name='lastName' onChange={actualizar} placeholder='Ingrese su apellido' />
-									<br />
-									<InputLabel htmlFor='id'>Cedula: </InputLabel>
+									<br /> */}
+									{/* <InputLabel htmlFor='id'>Cedula: </InputLabel>
 									<Input id='id' type='number' name='id' onChange={actualizar} />
-									<br />
+									<br /> */}
 									<InputLabel htmlFor='phone'>Telefono: </InputLabel>
 									<Input id='phone' type='number' name='phone' onChange={actualizar} />
 									<br />
@@ -75,17 +93,23 @@ const AgendarCita = () => {
 									<InputLabel htmlFor='petName'>Nombre mascota</InputLabel>
 									<Input id='petName' type='text' name="petName" onChange={actualizar} placeholder='Nombre de mascota' />
 									<br />
-									<InputLabel htmlFor='typePet'>Tipo de mascota</InputLabel>
-									<Input id='petName' type='text' name="typePet" onChange={actualizar} placeholder='Tipo de mascota' />
-									<br />
 									<FormControl>
-										<InputLabel htmlFor='doctor'>Doctor</InputLabel>
-										<Select id='doctor' label="doctor" name='doctor' onChange={actualizar} value=''>
-											<MenuItem value={"Karen Ortiz"} name='doctor'>Karen Ortiz</MenuItem>
-											<MenuItem value={"Jaun Camilo"} name='doctor'>Juan Camilo</MenuItem>
-											<MenuItem value={"Alexandra Rodriguez"} name='doctor'>Alexandra Rodriguez</MenuItem>
+										<InputLabel htmlFor='typePet'>Tipo mascota: </InputLabel>
+										<Select id='typePet' label="Tipo mascota" name='typePet' onChange={actualizar}>
+											<MenuItem value={1} name='typePet' placeholder='Perro'>Perro</MenuItem>
+											<MenuItem value={2} name='typePet'>Gato</MenuItem>
 										</Select>
 									</FormControl>
+									<br />
+									<FormControl>
+										<InputLabel htmlFor='doctor'>Doctor: </InputLabel>
+										<Select id='doctor' label="Doctor:" name='doctor' onChange={actualizar}>
+											<MenuItem value={1} name='doctor'>Cristian Ramirez</MenuItem>
+											<MenuItem value={2} name='doctor'>David Parra</MenuItem>
+											<MenuItem value={3} name='doctor'>brey Morales</MenuItem>
+										</Select>
+									</FormControl>
+									<br />
 									<InputLabel htmlFor='date'>Días disponibles: </InputLabel>
 									<Input id='date' type='date' name='date' onChange={actualizar} />
 									<br />
@@ -111,10 +135,7 @@ const AgendarCita = () => {
 						</Grid>
 					</Grid>
 				</Box>
-				</section>
-				<br /><br /><br /><br />
-				<button type='text' onClick={imprimir}>Imprimir</button>
-				<br /><br /><br /><br />
+			</section>
 		</main>
 	)
 }

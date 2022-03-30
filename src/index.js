@@ -9,10 +9,14 @@ import {
 } from "react-router-dom";
 import AgendarCita from './pages/AgendarCita';
 import MyCitas from './pages/MyCitas';
+import Register from './pages/Register';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Register />} />
+      </Routes>
       <Routes>
         <Route path='/Home' element={<App />}>
           <Route path='/Home/AgendarCita' element={<AgendarCita />} />

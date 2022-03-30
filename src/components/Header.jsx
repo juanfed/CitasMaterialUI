@@ -26,6 +26,10 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
+  const leave = () =>{
+    localStorage.clear()
+  }
+
   return (
     <header className='App'>
       <AppBar position="static">
@@ -111,7 +115,15 @@ const Header = () => {
                     Mis citas
                   </Link>
                 </Button>
+
             </Box>
+                <Button
+                  onClick={leave}
+                  sx={{ my: 2, color: 'white', display: 'block' }}>
+                  <Link style={{ textDecoration: "none", color: 'white' }} to='/'>
+                    Salir
+                  </Link>
+                </Button>
           </Toolbar>
         </Container>
       </AppBar>
