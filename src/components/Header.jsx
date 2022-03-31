@@ -124,6 +124,14 @@ const Header = () => {
                     Salir
                   </Link>
                 </Button>
+
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}>
+                  <Link style={{ textDecoration: "none", color: 'white' }} to='/Home/User'>
+                    Perfil
+                  </Link>
+                </Button>
           </Toolbar>
         </Container>
       </AppBar>

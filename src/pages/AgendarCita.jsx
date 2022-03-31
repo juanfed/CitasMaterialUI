@@ -50,7 +50,7 @@ const AgendarCita = () => {
 
 		await axios.request(options).then(function (response) {
 			console.log(response.data);
-			alert("Cita agendada con exito"); // lo puse como un mensaje emergente :v
+			// alert("Cita agendada con exito"); // lo puse como un mensaje emergente :v
 		}).catch(function (error) {
 			console.error(error);
 			alert("Error al agendar la cita");
@@ -58,7 +58,7 @@ const AgendarCita = () => {
 	}
 
 	return (
-		<main>
+		<div>
 			<section>
 				<Box
 					width="100%"
@@ -74,15 +74,6 @@ const AgendarCita = () => {
 						<Grid item md={8}>
 							<form action="" onSubmit={sendDate}>
 								<FormGroup >
-									{/* <InputLabel htmlFor='name'>Nombre: </InputLabel>
-									<Input id='name' type='text' name='name' onChange={actualizar} placeholder='Ingrese su nombre' />
-									<br />
-									<InputLabel htmlFor='lastName'>Apellido: </InputLabel>
-									<Input id='lastName' type='text' name='lastName' onChange={actualizar} placeholder='Ingrese su apellido' />
-									<br /> */}
-									{/* <InputLabel htmlFor='id'>Cedula: </InputLabel>
-									<Input id='id' type='number' name='id' onChange={actualizar} />
-									<br /> */}
 									<InputLabel htmlFor='phone'>Telefono: </InputLabel>
 									<Input id='phone' type='number' name='phone' onChange={actualizar} />
 									<br />
@@ -136,7 +127,7 @@ const AgendarCita = () => {
 					</Grid>
 				</Box>
 			</section>
-		</main>
+		</div>
 	)
 }
 

@@ -10,6 +10,7 @@ import {
 import AgendarCita from './pages/AgendarCita';
 import MyCitas from './pages/MyCitas';
 import Register from './pages/Register';
+import Usuario from './pages/Usuario';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.render(
       </Routes>
       <Routes>
         <Route path='/Home' element={<App />}>
+          <Route path='/Home/User' element={<Usuario />} />
           <Route path='/Home/AgendarCita' element={<AgendarCita />} />
           <Route path='/Home/MisCitas' element={<MyCitas />} />
         </Route>
