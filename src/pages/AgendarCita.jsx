@@ -53,7 +53,6 @@ const AgendarCita = () => {
 			// alert("Cita agendada con exito"); // lo puse como un mensaje emergente :v
 		}).catch(function (error) {
 			console.error(error);
-			alert("Error al agendar la cita");
 		});
 	}
 

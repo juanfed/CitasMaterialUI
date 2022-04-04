@@ -12,7 +12,7 @@ const Usuario = () => {
 	const [datos, setDatos] = useState([]);
 
 	const [data, setData] = useState({
-		cedula: '',
+		id_usuario: parseInt(localStorage.getItem('ID')),
 		nombre_usuario: '',
 		apellidos_usuario: '',
 		telefono: '',
@@ -28,7 +28,6 @@ const Usuario = () => {
 		};
 		axios.request(options).then(function (response) {
 			setDatos(response.data.consulta[0]);
-			console.log(datos)
 		}).catch(function (error) {
 			console.error(error);
 		});
@@ -44,8 +43,8 @@ const Usuario = () => {
 
 		// confirmo los datos
 
-		if(data.cedula === ''){
-			data.cedula = datos.cedula
+		if(data.id_usuario === ''){
+			data.id_usuario = datos.id_usuario
 		};
 		if (data.nombre_usuario === ''){
 			data.nombre_usuario = datos.nombre_usuario
@@ -66,20 +65,21 @@ const Usuario = () => {
 
 		const options = {
 			method: 'PUT',
-			url: 'http://localhost:8080/actualizar-usuario',
+			url: `http://localhost:8080/actualizar-usuario`,
 			headers: { 'Content-Type': 'application/json' },
 			data: {
-				cc: data.cedula,
+				id_usuario: data.id_usuario,
 				nombre: data.nombre_usuario,
 				apellidos: data.apellidos_usuario,
 				telefono: data.telefono,
-				correo: data.telefono,
+				correo: data.correo,
 				password: data.password
 			}
 		};
 
 		await axios.request(options).then(function (response) {
 			alert("datos cambiados")
+			setMostrar(false)
 		}).catch(function (error) {
 			console.error(error);
 			alert("Error al guardar los cambios");
@@ -109,9 +109,6 @@ const Usuario = () => {
 						<Grid item md={8}>
 							<form action="" onSubmit={envio}>
 								<FormGroup >
-									<InputLabel htmlFor='cc'>Numero Cedula: </InputLabel>
-									<Input id='cc' type='number' name='cc' defaultValue={datos.cedula} onChange={change} />
-									<br />
 									<InputLabel htmlFor='nombre'>Nombre: </InputLabel>
 									<Input id='nombre' type='text' name='nombre' defaultValue={datos.nombre_usuario} placeholder={datos.nombre_usuario} onChange={change} />
 									<br />
@@ -134,7 +131,7 @@ const Usuario = () => {
 										Guardar cambios
 									</Button>
 									<br />
-									<Button variant="contained" color="warning" type="submit" endIcon={<CancelIcon />}>
+									<Button variant="contained" color="warning" type="text" endIcon={<CancelIcon />} onClick={(()=>setMostrar(false))}>
 										Cancelar
 									</Button>
 								</FormGroup>

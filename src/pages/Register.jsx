@@ -58,7 +58,8 @@ const Register = () => {
 
 		await axios.request(options).then(function (response) {
 			console.log(response.data);
-			alert("Usuario creado con exito"); // lo puse como un mensaje emergente :v
+			alert("Usuario creado con exito, por favor intente ingresar ahora con su numero de documento y contraseña"); // lo puse como un mensaje emergente :v
+			closeRegister()
 		}).catch(function (error) {
 			console.error(error);
 			alert("Error al crear un nuevo usuario");
